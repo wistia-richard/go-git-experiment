@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
@@ -60,4 +61,15 @@ func main() {
 	}
 
 	fmt.Println(r.CommitObject(commit))
+
+	// // create a new branch
+	// headref, err := r.Head()
+	// if err != nil {
+	// 	log.Fatal("Error unable to find the head ref ")
+	// }
+
+	if r.CreateBranch(&config.Branch{Name: "RD/test", Remote: "origin", Merge: "ref/heads/RD/test", Rebase: "true"}) != nil {
+		log.Fatal("Error creating a new branch ")
+	}
+
 }
