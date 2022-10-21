@@ -78,7 +78,8 @@ func main() {
 
 	// push commit
 
-	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: ""}}); err != nil {
+	password := os.Getenv("git_password")
+	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: password}}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
 
