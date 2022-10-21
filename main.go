@@ -80,8 +80,9 @@ func main() {
 
 	fmt.Println(branchConfig.Name)
 
-	ref, _ := r.Head()
+	// checkout branch
+	branchName := branchConfig
 
-	fmt.Println(ref.Hash())
+	fmt.Println(branchName)
 
 }
