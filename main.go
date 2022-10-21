@@ -67,7 +67,7 @@ func main() {
 		log.Fatal("Error unable to commit")
 	}
 
-	branchRef := plumbing.NewHashReference("refs/head/RD/test", headref.Hash())
+	branchRef := plumbing.NewHashReference("refs/heads/RD/test", headref.Hash())
 
 	if err := r.Storer.SetReference(branchRef); err != nil {
 		log.Fatal("Error unable to store new ref")
