@@ -80,4 +80,8 @@ func main() {
 
 	fmt.Println(branchConfig.Name)
 
+	ref, _ := r.Head()
+
+	fmt.Println(ref.Hash())
+
 }
