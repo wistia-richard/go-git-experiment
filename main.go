@@ -54,9 +54,10 @@ func main() {
 		},
 	}
 
-	if _, err := w.Commit(*message, opts_commit); err != nil {
+	commit, err := w.Commit(*message, opts_commit)
+	if err != nil {
 		log.Fatal("Error unable to commit")
 	}
 
-	
+	fmt.Println(r.CommitObject(commit))
 }
