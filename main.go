@@ -11,6 +11,9 @@ import (
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/go-git/go-git/v5/plumbing/transport/http"
+	"github.com/google/go-github/v48/github"
+	"golang.org/x/net/context"
+	"golang.org/x/oauth2"
 )
 
 func main() {
@@ -78,18 +81,11 @@ func main() {
 
 	// push commit
 
-	password := os.Getenv("git_password")
-	fmt.Println(password)
 	token := os.Getenv("token")
 	fmt.Println(token)
 	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: token}}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
-	// token := os.Getenv("token")
-	// fmt.Println(token)
-	// if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.TokenAuth{Token: token}}); err != nil {
-	// 	log.Fatalf("Error unable push the commit to origin %s", err)
-	// }
 
 	branchRef := plumbing.NewHashReference("refs/heads/RD/test", headref.Hash())
 
@@ -108,4 +104,21 @@ func main() {
 		log.Fatalf("Error unable checkout branch %s", branchConfig.Name)
 	}
 
+	// create a pull request
+	// curl \
+	// -X POST \
+	// -H "Accept: application/vnd.github+json" \
+	// -H "Authorization: Bearer <YOUR-TOKEN>" \
+	// https://api.github.com/repos/OWNER/REPO/pulls \
+	// -d '{"title":"Amazing new feature","body":"Please pull these awesome changes in!","head":"octocat:new-feature","base":"master"}'
+
+	context := context.Background()
+	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
+	tc := oauth2.NewClient(context, ts)
+
+	client := github.NewClient(tc)
+
+	repos, _, _ := client.Repositories.List(context, "", &github.RepositoryListOptions{Affiliation: "owner"})
+	fmt.Println(repos)
+	// fmt.Println(rsp)
 }
