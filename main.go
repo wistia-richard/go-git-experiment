@@ -67,6 +67,14 @@ func main() {
 		log.Fatal("Error unable to commit")
 	}
 
+	// list remotes
+
+	list, err := r.Remotes()
+	if err != nil {
+		log.Fatalf("Error unable to list remotes %s", err)
+	}
+	fmt.Println(list)
+
 	// push commit
 
 	if err := r.Push(&git.PushOptions{RemoteName: "refs/origin/main"}); err != nil {
