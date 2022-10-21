@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/config"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
 )
 
@@ -62,14 +62,15 @@ func main() {
 
 	fmt.Println(r.CommitObject(commit))
 
-	// // create a new branch
-	// headref, err := r.Head()
-	// if err != nil {
-	// 	log.Fatal("Error unable to find the head ref ")
-	// }
+	headref, err := r.Head()
+	if err != nil {
+		log.Fatal("Error unable to commit")
+	}
 
-	if r.CreateBranch(&config.Branch{Name: "RD/test", Remote: "origin", Merge: "ref/heads/RD/test", Rebase: "true"}) != nil {
-		log.Fatalf("Error creating a new branch %s ", err)
+	branchRef := plumbing.NewHashReference("refs/head/RD/test", headref.Hash())
+
+	if err := r.Storer.SetReference(branchRef); err != nil {
+		log.Fatal("Error unable to store new ref")
 	}
 
 }
