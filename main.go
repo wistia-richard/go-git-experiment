@@ -75,6 +75,6 @@ func main() {
 
 	branchConfig, _ := r.Branch("Rd/test")
 
-	fmt.Println(*branchConfig)
+	fmt.Println(branchConfig.Name)
 
 }
