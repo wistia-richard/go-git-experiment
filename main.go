@@ -29,8 +29,8 @@ func main() {
 	status, _ := w.Status()
 	fmt.Println(status)
 
-	if err := w.AddGlob("[a-z]*"); err != nil {
-		fmt.Printf("Error occured during git add %s", err)
+	if err := w.AddWithOptions(&git.AddOptions{All: true}); err != nil {
+		fmt.Println(err)
 	}
 
 }
