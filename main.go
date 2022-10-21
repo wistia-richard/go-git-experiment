@@ -73,7 +73,10 @@ func main() {
 		log.Fatal("Error unable to store new ref")
 	}
 
-	branchConfig, _ := r.Branch("Rd/test")
+	branchConfig, err := r.Branch("Rd/test")
+	if err != nil {
+		log.Fatal("Error unable to find the branch ")
+	}
 
 	fmt.Println(branchConfig.Name)
 
