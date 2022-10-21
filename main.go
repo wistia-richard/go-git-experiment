@@ -79,9 +79,17 @@ func main() {
 	// push commit
 
 	password := os.Getenv("git_password")
-	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: password}}); err != nil {
+	fmt.Println(password)
+	token := os.Getenv("token")
+	fmt.Println(token)
+	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: token}}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
+	// token := os.Getenv("token")
+	// fmt.Println(token)
+	// if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.TokenAuth{Token: token}}); err != nil {
+	// 	log.Fatalf("Error unable push the commit to origin %s", err)
+	// }
 
 	branchRef := plumbing.NewHashReference("refs/heads/RD/test", headref.Hash())
 
