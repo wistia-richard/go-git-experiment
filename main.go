@@ -10,6 +10,7 @@ import (
 	"github.com/go-git/go-git/v5"
 	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 func main() {
@@ -77,7 +78,7 @@ func main() {
 
 	// push commit
 
-	if err := r.Push(&git.PushOptions{RemoteName: "origin"}); err != nil {
+	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: ""}}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
 
