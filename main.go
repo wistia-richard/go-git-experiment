@@ -85,7 +85,7 @@ func main() {
 	// 	log.Fatalf("Error unable push the commit to origin %s", err)
 	// }
 	fmt.Println(token)
-	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.TokenAuth{Token: token}}); err != nil {
+	if err := r.Push(&git.PushOptions{RemoteName: "https://github.com/wistia-richard/go-git-experiment.git", Auth: &http.TokenAuth{Token: token}}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
 	// token := os.Getenv("token")
