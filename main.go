@@ -80,9 +80,8 @@ func main() {
 
 	fmt.Println(branchConfig.Name)
 
-	// checkout branch
-	branchName := branchConfig
-
-	fmt.Println(branchName)
+	if err := w.Checkout(&git.CheckoutOptions{Branch: "RD/test"}); err != nil {
+		log.Fatalf("Error unable checkout branch %s", branchConfig.Name)
+	}
 
 }
