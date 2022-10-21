@@ -69,7 +69,7 @@ func main() {
 	// }
 
 	if r.CreateBranch(&config.Branch{Name: "RD/test", Remote: "origin", Merge: "ref/heads/RD/test", Rebase: "true"}) != nil {
-		log.Fatal("Error creating a new branch ")
+		log.Fatalf("Error creating a new branch %s ", err)
 	}
 
 }
