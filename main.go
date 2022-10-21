@@ -8,7 +8,9 @@ import (
 	"time"
 
 	"github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing"
 	"github.com/go-git/go-git/v5/plumbing/object"
+	"github.com/go-git/go-git/v5/plumbing/transport/http"
 )
 
 func main() {
@@ -54,5 +56,56 @@ func main() {
 		},
 	}
 
-	w.Commit(*message, opts_commit)
+	commit, err := w.Commit(*message, opts_commit)
+	if err != nil {
+		log.Fatal("Error unable to commit")
+	}
+
+	fmt.Println(r.CommitObject(commit))
+
+	headref, err := r.Head()
+	if err != nil {
+		log.Fatal("Error unable to commit")
+	}
+
+	// list remotes
+
+	list, err := r.Remotes()
+	if err != nil {
+		log.Fatalf("Error unable to list remotes %s", err)
+	}
+	fmt.Println(list)
+
+	// push commit
+
+	password := os.Getenv("git_password")
+	fmt.Println(password)
+	token := os.Getenv("token")
+	fmt.Println(token)
+	if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.BasicAuth{Username: "wistia-richard", Password: token}}); err != nil {
+		log.Fatalf("Error unable push the commit to origin %s", err)
+	}
+	// token := os.Getenv("token")
+	// fmt.Println(token)
+	// if err := r.Push(&git.PushOptions{RemoteName: "origin", Auth: &http.TokenAuth{Token: token}}); err != nil {
+	// 	log.Fatalf("Error unable push the commit to origin %s", err)
+	// }
+
+	branchRef := plumbing.NewHashReference("refs/heads/RD/test", headref.Hash())
+
+	if err := r.Storer.SetReference(branchRef); err != nil {
+		log.Fatal("Error unable to store new ref")
+	}
+
+	branchConfig, err := r.Branch("RD/test")
+	if err != nil {
+		log.Fatal("Error unable to find the branch ")
+	}
+
+	fmt.Println(branchConfig.Name)
+
+	if err := w.Checkout(&git.CheckoutOptions{Branch: "refs/heads/RD/test"}); err != nil {
+		log.Fatalf("Error unable checkout branch %s", branchConfig.Name)
+	}
+
 }
