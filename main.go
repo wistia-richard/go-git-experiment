@@ -70,7 +70,7 @@ func main() {
 	// push commit
 
 	if err := r.Push(&git.PushOptions{RemoteName: "refs/origin/main"}); err != nil {
-		log.Fatalf("Error unable push the commit to origin")
+		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
 
 	branchRef := plumbing.NewHashReference("refs/heads/RD/test", headref.Hash())
