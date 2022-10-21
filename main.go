@@ -77,7 +77,7 @@ func main() {
 
 	// push commit
 
-	if err := r.Push(&git.PushOptions{RemoteName: "refs/origin/main"}); err != nil {
+	if err := r.Push(&git.PushOptions{RemoteName: "origin"}); err != nil {
 		log.Fatalf("Error unable push the commit to origin %s", err)
 	}
 
