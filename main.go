@@ -8,8 +8,6 @@ import (
 	"time"
 
 	"github.com/go-git/go-git/v5"
-	"github.com/go-git/go-git/v5/plumbing"
-	"github.com/go-git/go-git/v5/config"
 	"github.com/go-git/go-git/v5/plumbing/object"
 	"github.com/google/go-github/v48/github"
 	"golang.org/x/net/context"
@@ -111,21 +109,12 @@ func main() {
 	// 	log.Fatal("Error unable to find the branch ")
 	// }
 
-<<<<<<< HEAD
-	if err := w.Checkout(&git.CheckoutOptions{Branch: "refs/heads/RD/test"}); err != nil {
-		log.Fatalf("Error unable checkout branch %s", branchConfig.Name)
-	}
-	ref, _ := r.Head()
-
-	fmt.Println(branchName)
-=======
 	// fmt.Println(branchConfig.Name)
 
 	// checkout the new branch
 	// if err := w.Checkout(&git.CheckoutOptions{Branch: "refs/heads/RD/test"}); err != nil {
 	// 	log.Fatalf("Error unable checkout branch %s", branchConfig.Name)
 	// }
->>>>>>> b884aba (list repos using github go library)
 
 	context := context.Background()
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: token})
