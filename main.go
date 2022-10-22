@@ -24,8 +24,6 @@ type pullRequestData struct {
 
 func main() {
 
-	message := flag.String("m", "WIP", "# commit message")
-	flag.Parse()
 	// url := "https://github.com/wistia-richard/go-git-experiment"
 	path, err := os.Getwd()
 	if err != nil {
@@ -67,6 +65,10 @@ func main() {
 			When:  time.Now(),
 		},
 	}
+
+	message := flag.String("m", "WIP", "# commit message")
+	flag.Parse()
+
 
 	// commit the staged changes
 	commit, err := w.Commit(*message, opts_commit)
